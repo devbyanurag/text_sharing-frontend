@@ -25,9 +25,8 @@ const App = () => {
           if (response.data.valid) {
             setUser(response.data.user);
           } else {
-            toast.error("Token is invalid")
+            toast.error("Token is invalid");
           }
-
         } catch (error) {
           console.error('Token validation failed:', error);
           localStorage.removeItem('authToken');
@@ -38,6 +37,47 @@ const App = () => {
 
     validateToken();
   }, [setUser]);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      showInstallToast(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const showInstallToast = (event) => {
+    toast.info(
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <span>Install our app for a better experience!</span>
+        <div
+          style={{ backgroundColor: '#c2edcf', padding: '7px 10px', borderRadius: '10px', cursor: 'pointer', marginTop: '10px' }}
+          onClick={async () => {
+            event.prompt();
+            const { outcome } = await event.userChoice;
+            if (outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            } else {
+              console.log('User dismissed the install prompt');
+            }
+
+          }}
+        >
+          Install
+        </div>
+      </div>,
+      {
+        closeButton: true, // Hide the default close button
+        autoClose:2000,
+        position:'bottom-right'
+      }
+    );
+  };
 
   return (
     <BrowserRouter>

@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
-import styles from './Home.module.css'
-import reloadImg from '../../assets/images/reload.png'
-import clearImg from '../../assets/images/clear.png'
-import saveImg from '../../assets/images/save.png'
+import styles from './Home.module.css';
+import reloadImg from '../../assets/images/reload.png';
+import clearImg from '../../assets/images/clear.png';
+import saveImg from '../../assets/images/save.png';
 import api from '../../utils/api';
 import { toast } from 'react-toastify';
 import Loading from '../../components/Loading/Loading';
 
-
-
 const Home = () => {
   const [text, setText] = useState('');
-
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   // Handle text input change
   const handleTextChange = (e) => {
@@ -23,10 +20,31 @@ const Home = () => {
 
   useEffect(() => {
     fetchText();
-  }, []);
+    
+    // Set up keyboard shortcuts
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault(); // Prevent the default save dialog
+        saveText();
+      } else if (e.ctrlKey && e.key === 'r') {
+        e.preventDefault(); // Prevent the default reload
+        fetchText();
+      } else if (e.ctrlKey && e.key === 'c') {
+        e.preventDefault(); // Prevent the default copy
+        clearText();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []); // Run once on mount
 
   const fetchText = async () => {
-    setLoading(true)
+    setLoading(true);
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
@@ -38,16 +56,14 @@ const Home = () => {
         if (response.data.text) {
           setText(response.data.text);
         } else {
-          toast.error("Token is invalid")
+          toast.error("Token is invalid");
         }
-
       } catch (error) {
         console.error('Token validation failed:', error);
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
-
 
   const saveText = async () => {
     setLoading(true);
@@ -65,7 +81,7 @@ const Home = () => {
           toast.error("Failed to update text");
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
     setLoading(false);
@@ -75,8 +91,6 @@ const Home = () => {
   const clearText = () => {
     setText('');
   };
-
-
 
   return (
     <div className={styles.container}>
