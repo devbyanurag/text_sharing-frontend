@@ -1,0 +1,28 @@
+.submitButton {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #48c4ea;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+
+}
+
+.inputField {
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.errorActive{
+  border: 1px solid red;
+}
+
+.dialogContainer{
+  font-size: 10px;
+}

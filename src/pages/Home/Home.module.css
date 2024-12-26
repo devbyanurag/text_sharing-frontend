@@ -1,0 +1,44 @@
+.rightContainer button {
+  padding: 10px;
+  border: 2px solid #f6f7f2;
+  background-color: #c2edcf;
+  border-radius: 10px;
+  font-family: "Inter", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rightContainer button:hover {
+  cursor: pointer;
+  background-color: #b9e6c7;
+}
+
+.container {
+  height: 100vh;
+  background-color: #f6f7f2;
+  width: 100%;
+}
+.leftContainer {
+  display: flex;
+}
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+}
+.textarea {
+  background-color: #fefff8;
+  height: calc(100vh - 70px); /* Adjust height to fit the screen minus 70px */
+  width: 100%; /* Take full width */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none; /* Prevent resizing */
+  font-size: 16px;
+}
+.rightContainer button img {
+  height: 20px;
+  width: 20px;
+}
