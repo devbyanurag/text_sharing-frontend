@@ -43,7 +43,7 @@ const manifestFile: Partial<VitePWAOptions> = {
       },
     ],
     theme_color: "#181818",
-    background_color: "#e0cc3b",
+    background_color: "#c2edcf",
     display: "standalone",
     scope: "/",
     start_url: "/",
