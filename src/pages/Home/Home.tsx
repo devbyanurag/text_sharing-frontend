@@ -54,7 +54,7 @@ const Home = () => {
         if (response.data.text) {
           setText(response.data.text);
         } else {
-          toast.error("Token is invalid");
+          // toast.error("Token is invalid");
         }
       } catch (error) {
         console.error('Token validation failed:', error);
