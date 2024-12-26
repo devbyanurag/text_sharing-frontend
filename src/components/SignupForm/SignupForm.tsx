@@ -9,9 +9,9 @@ interface SignupFormType{
 const SignupForm = ({setLogin}:SignupFormType) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState({
-    email: 'a1@gmail.com',
-    password: '123',
-    name: 'A',
+    email: '',
+    password: '',
+    name: '',
   });
 
   const [errors, setErrors] = useState({

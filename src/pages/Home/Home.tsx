@@ -19,17 +19,16 @@ const Home = () => {
 
   useEffect(() => {
     fetchText();
-    
-    // Set up keyboard shortcuts
+  
     const handleKeyDown = (e) => {
       if (e.ctrlKey && e.key === 's') {
-        e.preventDefault(); // Prevent the default save dialog
+        e.preventDefault(); 
         saveText();
       } else if (e.ctrlKey && e.key === 'r') {
-        e.preventDefault(); // Prevent the default reload
+        e.preventDefault();
         fetchText();
       } else if (e.ctrlKey && e.key === 'c') {
-        e.preventDefault(); // Prevent the default copy
+        e.preventDefault(); 
         clearText();
       }
     };
