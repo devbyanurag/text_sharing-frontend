@@ -25,7 +25,7 @@ const App = () => {
           if (response.data.valid) {
             setUser(response.data.user);
           } else {
-            toast.error("Token is invalid");
+            // toast.error("Token is invalid");
           }
         } catch (error) {
           console.error('Token validation failed:', error);
