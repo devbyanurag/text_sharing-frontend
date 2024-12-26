@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Header from '../../components/Header/Header';
 import styles from './Home.module.css';
 import reloadImg from '../../assets/images/reload.png';
@@ -17,31 +17,7 @@ const Home = () => {
     setText(newText);
   };
 
-  useEffect(() => {
-    fetchText();
-  
-    const handleKeyDown = (e) => {
-      if (e.ctrlKey && e.key === 's') {
-        e.preventDefault(); 
-        saveText();
-      } else if (e.ctrlKey && e.key === 'r') {
-        e.preventDefault();
-        fetchText();
-      } else if (e.ctrlKey && e.key === 'c') {
-        e.preventDefault(); 
-        clearText();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    
-    // Cleanup the event listener on unmount
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []); // Run once on mount
-
-  const fetchText = async () => {
+  const fetchText = useCallback(async () => {
     setLoading(true);
     const token = localStorage.getItem('authToken');
     if (token) {
@@ -54,41 +30,71 @@ const Home = () => {
         if (response.data.text) {
           setText(response.data.text);
         } else {
-          // toast.error("Token is invalid");
+          toast.error('Token is invalid');
         }
       } catch (error) {
         console.error('Token validation failed:', error);
       }
     }
     setLoading(false);
-  };
+  }, []);
 
-  const saveText = async () => {
+  const saveText = useCallback(async () => {
     setLoading(true);
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
-        const response = await api.put('/text', { text }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await api.put(
+          '/text',
+          { text },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (response.data.message) {
           toast.success(response.data.message);
         } else {
-          toast.error("Failed to update text");
+          toast.error('Failed to update text');
         }
       } catch (error) {
         console.log(error);
       }
     }
     setLoading(false);
-  };
+  }, [text]);
 
-  // Clear text field
-  const clearText = () => {
+  const clearText = useCallback(() => {
     setText('');
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchText();
+
+    const handleKeyDown = (e) => {
+      console.log(`Key pressed: ${e.key}`); // Debugging
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        console.log('Saving text...');
+        saveText();
+      } else if (e.ctrlKey && e.key === 'r') {
+        e.preventDefault();
+        console.log('Reloading text...');
+        fetchText();
+      } else if (e.ctrlKey && e.key === 'c') {
+        e.preventDefault();
+        console.log('Clearing text...');
+        clearText();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [fetchText, saveText, clearText]);
 
   return (
     <div className={styles.container}>
