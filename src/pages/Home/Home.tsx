@@ -12,7 +12,6 @@ const Home = () => {
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Handle text input change
   const handleTextChange = (e) => {
     const newText = e.target.value;
     setText(newText);
