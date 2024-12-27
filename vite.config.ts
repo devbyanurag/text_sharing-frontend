@@ -4,12 +4,12 @@ import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 
 // Define the manifest file with the correct type
 const manifestFile: Partial<VitePWAOptions> = {
-  registerType: "prompt", // this is valid
+  registerType: "prompt",
   includeAssets: ["favicon.ico", "apple-touch-icon.png"],
   manifest: {
-    name: "My PWA App",
-    short_name: "My PWA",
-    description: "My amazing Progressive Web App!",
+    name: "Text Sharing",
+    short_name: "Text Sharing",
+    description: "Text Sharing for sending text from cross platforms.",
     icons: [
       {
         src: "/pwa-192x192.png",
