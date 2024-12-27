@@ -20,25 +20,7 @@ const Home = () => {
   useEffect(() => {
     fetchText();
   
-    const handleKeyDown = (e) => {
-      if (e.ctrlKey && e.key === 's') {
-        e.preventDefault(); 
-        saveText();
-      } else if (e.ctrlKey && e.key === 'r') {
-        e.preventDefault();
-        fetchText();
-      } else if (e.ctrlKey && e.key === 'c') {
-        e.preventDefault(); 
-        clearText();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    
-    // Cleanup the event listener on unmount
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
+  
   }, []); // Run once on mount
 
   const fetchText = async () => {
