@@ -67,7 +67,6 @@ const Home = () => {
     setLoading(false);
   };
 
-  // Clear text field
   const clearText = () => {
     setText('');
   };
